@@ -14,8 +14,17 @@ import {
     DropdownMenuShortcut,
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
+import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components"
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server"
+import { redirect } from "next/navigation"
   
-  export function UserNav() {
+  export async function UserNav() {
+    const session = getKindeServerSession()
+    // if(!await session.isAuthenticated()){
+    //   redirect('/')
+    // }
+    const user = await session.getUser()
+    // const avatarFallBack = user.given_name?.split('')[0] + user.family_name?.split('')[0]
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -29,9 +38,9 @@ import {
         <DropdownMenuContent className="w-56" align="end" forceMount>
           <DropdownMenuLabel className="font-normal">
             <div className="flex flex-col space-y-1">
-              <p className="text-sm font-medium leading-none">shadcn</p>
+              <p className="text-sm font-medium leading-none">{user.given_name} {user.family_name}</p>
               <p className="text-xs leading-none text-muted-foreground">
-                m@example.com
+                {user.email}
               </p>
             </div>
           </DropdownMenuLabel>
@@ -52,10 +61,12 @@ import {
             <DropdownMenuItem>New Team</DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
+            <LogoutLink>
+            <DropdownMenuItem>
             Log out
             <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
           </DropdownMenuItem>
+          </LogoutLink>
         </DropdownMenuContent>
       </DropdownMenu>
     )

@@ -11,7 +11,9 @@ export function MainNav({
       className={cn("flex items-center space-x-4 lg:space-x-6", className)}
       {...props}
     >
-      <Link
+      <h1 className="text-xl font-bold">Repoma - Real Estate Portfolio Management</h1>
+      
+      {/* <Link
         href="/examples/dashboard"
         className="text-sm font-medium transition-colors hover:text-primary"
       >
@@ -34,7 +36,7 @@ export function MainNav({
         className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
       >
         Settings
-      </Link>
+      </Link> */}
     </nav>
   )
 }

@@ -22,62 +22,42 @@ import { Overview } from "./Overview"
 // import TeamSwitcher from "@/app/(app)/examples/dashboard/components/team-switcher"
 import { UserNav } from "./user-nav"
 import { ModeToggle } from "./toggle"
+import Link from "next/link"
+import Header from "../common/Header"
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server"
 
 export const metadata: Metadata = {
   title: "Dashboard",
   description: "Example dashboard app built using the components.",
 }
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const session = getKindeServerSession()
+  const user = await session.getUser()
   return (
     <>
-      <div className="md:hidden">
-        <Image
-          src="/examples/dashboard-light.png"
-          width={1280}
-          height={866}
-          alt="Dashboard"
-          className="block dark:hidden"
-        />
-        <Image
-          src="/examples/dashboard-dark.png"
-          width={1280}
-          height={866}
-          alt="Dashboard"
-          className="hidden dark:block"
-        />
-      </div>
-      <div className="hidden flex-col md:flex">
-        <div className="border-b">
-          <div className="flex h-16 items-center px-4">
-            {/* <TeamSwitcher /> */}
-            <MainNav className="mx-6" />
-            <div className="ml-auto flex items-center space-x-4">
-              {/* <Search /> */}
-              <ModeToggle/>
-              <UserNav />
-            </div>
-          </div>
-        </div>
+      <div className="">
+        {/* <div className="border-b">
+          <Header/>
+        </div> */}
         <div className="flex-1 space-y-4 p-8 pt-6">
           <div className="flex items-center justify-between space-y-2">
-            <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
+            <h2 className="text-3xl font-bold tracking-tight">Welcome, {user.given_name} {user.family_name}</h2>
             <div className="flex items-center space-x-2">
               {/* <CalendarDateRangePicker /> */}
-              <Button>Download</Button>
             </div>
           </div>
           <Tabs defaultValue="overview" className="space-y-4">
             <TabsList>
               <TabsTrigger value="overview">Overview</TabsTrigger>
               <TabsTrigger value="analytics" disabled>
-                Analytics
+                Properties
               </TabsTrigger>
               <TabsTrigger value="reports" disabled>
-                Reports
+                Financials
               </TabsTrigger>
               <TabsTrigger value="notifications" disabled>
-                Notifications
+                Tenants
               </TabsTrigger>
             </TabsList>
             <TabsContent value="overview" className="space-y-4">
@@ -110,7 +90,7 @@ export default function DashboardPage() {
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
-                      Subscriptions
+                      Total properties
                     </CardTitle>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -136,7 +116,7 @@ export default function DashboardPage() {
                 </Card>
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Sales</CardTitle>
+                    <CardTitle className="text-sm font-medium">Invested Value</CardTitle>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
@@ -161,7 +141,7 @@ export default function DashboardPage() {
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
-                      Active Now
+                      Current Value
                     </CardTitle>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -195,7 +175,7 @@ export default function DashboardPage() {
                 </Card>
                 <Card className="col-span-3">
                   <CardHeader>
-                    <CardTitle>Recent Sales</CardTitle>
+                    <CardTitle>Recent Activity</CardTitle>
                     <CardDescription>
                       You made 265 sales this month.
                     </CardDescription>
